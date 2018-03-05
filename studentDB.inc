@@ -22,7 +22,6 @@ public function __destruct()
         }
 }
 
-//unvalidated!
 public function getParkingSpace($user,$zone)
 {
 		$id = $this->db->real_escape_string($user);
@@ -35,10 +34,9 @@ public function getParkingSpace($user,$zone)
         {
                 $response[] = $row;
         }
+	print_r($response);
         return $response;
 }
-
-//unvalidated!
 public function getPartners($search)
 {
 		$sr = $this->db->real_escape_string($search);
@@ -53,7 +51,7 @@ public function getPartners($search)
 		{
 			$query = "select * from partners where partner_ID = $sr;";
 		} else {
-			$query = "select * from partners where partner_name LIKE %'$sr'%;";
+			$query = "select * from partners where partner_name LIKE '%$sr%';";
 		}
 		//^^else search is name, match by name
 
@@ -63,10 +61,25 @@ public function getPartners($search)
         {
                 $response[] = $row;
         }
+	print_r($response);
         return $response;
 }
 
-//unvalidated!
+public function addSpace($userid,$zoneid,$spacenum,$spacenotes)
+{
+        $uid = $this->db->real_escape_string($userid);
+		$zid = $this->db->real_escape_string($zoneid);
+		$spc = $this->db->real_escape_string($spacenum);
+		$spn = $this->db->real_escape_string($spacenotes);
+        $query = "insert into spaces(user_id,zone_id, space_number, space_notes)
+		VALUES ($uid,$zid,'$spc','$spn');";
+
+        echo "executing SQL statement:\n".$query."\n";
+        if (!$this->db->query($query))
+        {
+                echo "Failed to insert zone record under lot $lotid".PHP_EOL;
+        }
+}
 public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lotdescript)
 {
         $vn = $this->db->real_escape_string($venueid);
@@ -85,7 +98,6 @@ public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lo
                 echo "Failed to insert record for $lotname".PHP_EOL;
         }
 }
-//unvalidated!
 public function addLink($partnerid,$spotid,$islot) 
 {
 	$pid = $this->db->real_escape_string($partnerid);
@@ -123,7 +135,6 @@ public function addLink($partnerid,$spotid,$islot)
             echo "Failed to establish partner link between partner $partnerid and $lotornot $spotid".PHP_EOL;
         }
 }
-//unvalidated!
 public function addVenue($venuename,$venueaddr,$venuestate,$venuezip,$venuedesc)
 {
         $vn = $this->db->real_escape_string($venuename);
@@ -141,7 +152,6 @@ public function addVenue($venuename,$venueaddr,$venuestate,$venuezip,$venuedesc)
         }
 }
 
-//unvalidated!
 public function addPartner($pname,$paddr,$pstate,$pzip,$pemail)
 {
         $pn = $this->db->real_escape_string($pname);

@@ -37,8 +37,14 @@ for ($i = 1;$i < $argc;$i++)
 				case "--gspace":
                         $action = "getspace";
                         break;
+				case "--aspace":
+                        $action = "addspace";
+                        break;
 				
-				
+                case "-q":
+                        $spacenum = $argv[$i + 1];
+                        $i++;
+                        break;				
                 case "-u":
                         $username = $argv[$i + 1];
                         $i++;
@@ -47,55 +53,55 @@ for ($i = 1;$i < $argc;$i++)
                         $password = $argv[$i + 1];
                         $i++;
                         break;
-				case "-n":
+		case "-n":
                         $name = $argv[$i + 1];
                         $i++;
                         break;
-				case "-a":
+		case "-a":
                         $address = $argv[$i + 1];
                         $i++;
                         break;		
-				case "-s":
+		case "-s":
                         $state = $argv[$i + 1];
                         $i++;
                         break;
-				case "-z":
+		case "-z":
                         $zip = $argv[$i + 1];
                         $i++;
                         break;
-				case "-d":
+		case "-d":
                         $description = $argv[$i + 1];
                         $i++;
                         break;
-				case "-e":
+		case "-e":
                         $email = $argv[$i + 1];
                         $i++;
                         break;
-				case "-x":
+		case "-x":
                         $partnerid = $argv[$i + 1];
                         $i++;
                         break;
-				case "-o":
+		case "-o":
                         $zoneid = $argv[$i + 1];
                         $i++;
                         break;
-				case "-l":
+		case "-l":
                         $lotid = $argv[$i + 1];
                         $i++;
                         break;
-				case "-v":
+		case "-v":
                         $venueid = $argv[$i + 1];
                         $i++;
                         break;
-				case "-c":
+		case "-c":
                         $size = $argv[$i + 1];
                         $i++;
                         break;
-				case "-k":
+		case "-k":
                         $searchkey = $argv[$i + 1];
                         $i++;
                         break;
-				case "-b":
+		case "-b":
                         $spottype = $argv[$i + 1];
                         $i++;
                         break;
@@ -171,7 +177,33 @@ switch ($action)
                 $studentDB = new StudentAccess("Parking");
                 $studentDB->addLink($partnerid,$zoneid,$spottype);
                 break;	
-			
+		case "getpartners": //needs -k
+                if (!isset($searchkey))
+				{
+					echo "please give -k searchkey (can be partnerid or words)".PHP_EOL;
+					exit(1);
+				}
+                $studentDB = new StudentAccess("Parking");
+                $studentDB->getPartners($searchkey);
+                break;
+		case "getspace": //needs -u, -o
+                if (!isset($username) OR !isset($zoneid))
+				{
+					echo "please give -u username -o zoneid".PHP_EOL;
+					exit(1);
+				}
+                $studentDB = new StudentAccess("Parking");
+                $studentDB->getParkingSpace($username,$zoneid);
+                break;	
+		case "addspace": //needs -u, -o, -q, -d
+                if (!isset($username) OR !isset($zoneid) OR !isset($spacenum) OR !isset($description))
+				{
+					echo "please give -u username -o zoneid -q spacenum -d description".PHP_EOL;
+					exit(1);
+				}
+                $studentDB = new StudentAccess("Parking");
+                $studentDB->addSpace($username,$zoneid,$spacenum,$description);
+                break;		
         default:
                 echo "No action specified, exiting".PHP_EOL;
                 exit (1);
