@@ -78,7 +78,9 @@ public function addSpace($userid,$zoneid,$spacenum,$spacenotes)
         if (!$this->db->query($query))
         {
                 echo "Failed to insert zone record under lot $lotid".PHP_EOL;
+		return 0;
         }
+	else { return 1; }
 }
 public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lotdescript)
 {
@@ -168,8 +170,6 @@ public function addPartner($pname,$paddr,$pstate,$pzip,$pemail)
                 echo "Failed to insert record for $pname".PHP_EOL;
         }
 }
-
-
 public function validateUser($username,$password)
 {
         $un = $this->db->real_escape_string($username);
@@ -180,13 +180,60 @@ public function validateUser($username,$password)
 
         while ($row = $result->fetch_assoc())
         {
-                if ($row["user_password"] == $pw)
+                if ( password_verify($pw, $row["user_password"]) == true)
                 {
                         // I have a match
-                        return true;
+			return $row;
                 }
-        }
-        return false;
+                else {
+                        return 0;
+                }
+	}
+	
+}
+public function makeHash($password)
+{
+        $pw = $this->db->real_escape_string($password);
+		$pw_hashed = password_hash($pw, PASSWORD_DEFAULT);
+        return $pw_hashed;
+}
+
+public function findLot($table,$placetype,$place) 
+{
+		$tab = $this->db->real_escape_string($table);
+		$pt = $this->db->real_escape_string($placetype);
+		$pla = $this->db->real_escape_string($place);
+		
+        $query = "Select * from $table where ".$placetype."_name LIKE '%$place%' LIMIT 1;";
+
+        $queryResponse = $this->db->query($query);
+		return $queryResponse;
+}
+
+public function findZone($table,$lotid,$zone,$spacenum,$spacenotes) 
+{
+		$tab = $this->db->real_escape_string($table);
+		$lot = $this->db->real_escape_string($lotid);
+		$zn = $this->db->real_escape_string($zone);
+		$snum = $this->db->real_escape_string($spacenum);
+		$snotes = $this->db->real_escape_string($spacenotes);
+
+		if ($tab == "venues") {
+
+            $zonequery = "Select * from zones where zone_description LIKE '%$zn%' LIMIT 1;";
+                }
+                else {
+                       // $lot = $result['lot_ID'];
+                        $zonequery = "Select * from zones where lot_ID = $lot AND zone_description LIKE '%$zn%' LIMIT 1;";
+                }
+                $result =  $this->db->query($zonequery);
+		$response = $result->fetch_assoc();
+                if ($zoneid = $response['zone_ID']) {
+                         //$row = $this->db->addSpace($_SESSION['user_ID'],$zoneid,$snum,$snotes);
+                         return $response;
+				}
+		else {return 0;}
+				
 }
 
 }

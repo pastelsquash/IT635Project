@@ -40,6 +40,9 @@ for ($i = 1;$i < $argc;$i++)
 				case "--aspace":
                         $action = "addspace";
                         break;
+				case "--hash":
+                        $action = "hash";
+                        break;
 				
                 case "-q":
                         $spacenum = $argv[$i + 1];
@@ -121,14 +124,13 @@ switch ($action)
                         exit(1);
                 }
                 $studentDB = new StudentAccess("Parking");
-                if ($studentDB->validateUser($username,$password) == false)
+                if (!empty($response = $studentDB->validateUser($username,$password)))
                 {
-                        echo "login failed!".PHP_EOL;
+                        print_r($response);
                 }
-                else
-                {
-                        echo "login successful".PHP_EOL;
-                }
+		else {
+			print_r($response);
+		}
                 break;
 		case "addpartner": //needs -n, -a, -s, -z, -e
                 if (!isset($name) OR !isset($address) OR !isset($state) OR !isset($zip) OR !isset($email))
@@ -203,6 +205,16 @@ switch ($action)
 				}
                 $studentDB = new StudentAccess("Parking");
                 $studentDB->addSpace($username,$zoneid,$spacenum,$description);
+                break;	
+		case "hash": //needs -p
+                if (!isset($password))
+				{
+					echo "please give -p password".PHP_EOL;
+					exit(1);
+				}
+                $studentDB = new StudentAccess("Parking");
+                $hash = $studentDB->makeHash($password);
+		echo $hash.PHP_EOL;
                 break;		
         default:
                 echo "No action specified, exiting".PHP_EOL;

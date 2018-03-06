@@ -68,7 +68,7 @@ CREATE TABLE `lots` (
   PRIMARY KEY (`lot_ID`),
   KEY `venue_ID` (`venue_ID`),
   CONSTRAINT `lots_ibfk_1` FOREIGN KEY (`venue_ID`) REFERENCES `venues` (`venue_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +153,7 @@ CREATE TABLE `users` (
   `user_password` varchar(256) NOT NULL,
   `user_email` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`user_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -162,7 +162,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'bwallace','admin','bwallace','bad@email.com'),(2,'jimbo',NULL,'jimbo','jimbo@trucknuts.org'),(3,'strongbad',NULL,'strongbad','gloveman@sbemail.com'),(4,'cletus',NULL,'cletus','cman@prison.net'),(5,'manager','admin','manager','manager@pl.com');
+INSERT INTO `users` VALUES (1,'bwallace','admin','$2y$10$v1YTdx3VUd4/ppMeCt0qBu8kW9snsA9vSpLBrb59yxgrm2QD7r4CO','bad@email.com'),(2,'jimbo',NULL,'$2y$10$HKe0Uv/UWMJuvF.LL2GL3..eOU75yQu/pZR6oOwpaT/o4NM5YqfP6','jimbo@trucknuts.org'),(3,'strongbad',NULL,'$2y$10$cAJF0PEr4QflCTXxovCFTOKMjgmsmo5ZV3wRwzz/REtxfOj7eZyMq','gloveman@sbemail.com'),(4,'cletus',NULL,'$2y$10$nEH3g8kjKnMN56d8YSK8QucAdUaMbZP3.j9856ppNQopYBmL8wOgy','cman@prison.net'),(5,'manager','admin','$2y$10$nGudGbVQf0THUdbQRVvHqOTkE6QF6VcswJOWej/6McobKCIvE3fRK','manager@pl.com');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -181,7 +181,7 @@ CREATE TABLE `venues` (
   `venue_zip` varchar(5) NOT NULL,
   `venue_description` varchar(1024) DEFAULT NULL,
   PRIMARY KEY (`venue_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -229,4 +229,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-03-05  4:48:12
+-- Dump completed on 2018-03-05 23:51:46

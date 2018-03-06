@@ -1,37 +1,33 @@
 <?php
 
-require_once("../include/studentDB.inc");
-function doLogin($username,$password)
-{
-	$studentDB = new StudentAccess("Classes");
-	return $studentDB->validateUser($username,$password);
+	session_start();
+
+if (isset($_POST['login'])) {
+	include_once("../include/studentDB.inc");
+	
+        $studentDB = new StudentAccess("Parking");
+        $row = $studentDB->validateUser($_POST['uid'],$_POST['pid']);
+
+	if (!empty($row)) {
+		$_SESSION['user_name'] = $row['user_name'];
+                $_SESSION['user_role'] = $row['user_role'];
+                $_SESSION['user_email'] = $row['user_email'];
+                $_SESSION['user_ID'] = $row['user_ID'];
+		if (!$row['user_role']) {
+			header("Location: ./uview.php");
+			exit();
+		}
+		else {
+			header("Location: ./aview.php");
+			exit();
+		}
+	
+	}
+
+	else {
+		header("Location: ./index.php?login=error");
+		exit();
+	}
 }
 
-if (!isset($_POST))
-{
-	echo "error: expected POST data!";
-	exit(0);
-}
-if (!isset($_POST["type"]))
-{
-	echo "error: no type specified";
-	exit(0);
-}
-$response = "unsupported request type";
-switch($_POST["type"])
-{
-	case "auth":
-	    $auth = doLogin($_POST["username"],$_POST["password"]);
-	    if ($auth)
-	    {
-		$response = "successful";
-	    }
-	    else
-	    {
-		$response = "failed";
-	    }
-	break;
-}
-
-echo json_encode($response);
 ?>
