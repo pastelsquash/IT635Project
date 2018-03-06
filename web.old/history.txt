@@ -1,0 +1,201 @@
+    1  ls
+    2  ls -la
+    3  cd Desktop/
+    4  ls
+    5  ls -la
+    6  cd .
+    7  cd ..
+    8  rm -rf /
+    9  sudo rm -rf /
+   10  sudo apt-get update
+   11  sudo apt-get install synaptic
+   12  sudo synaptic
+   13  history
+   14  ps -ef  | grep -i packagekit
+   15  ps -ef  | grep -i package
+   16  lsof 
+   17  history
+   18  mkdir git
+   19  ls
+   20  cd git/
+   21  cd ..
+   22  rm -r git/
+   23  cd /
+   24  ls
+   25  cd /home
+   26  ls
+   27  cd djkehoe/
+   28  cd git
+   29  cd ~
+   30  cd /var/log/
+   31  cd  ../run/
+   32  ls
+   33  cd ~
+   34  sudo synaptic
+   35  sudo apt-get install mysql-server
+   36  history
+   37  cat .bash_history 
+   38  mysql -u root -p
+   39  sudo apt-get install php
+   40  sudo apt-get install git
+   41  ls
+   42  mkdir it635
+   43  ls
+   44  cd it635/
+   45  ls
+   46  git init
+   47  git status
+   48  mysqldump -u root -p > backup.sql
+   49  mysqldump -u root -p Classes > backup.sql
+   50  cat backup.sql 
+   51  git add backup.sql 
+   52  git status
+   53  git rm --cached backup.sql 
+   54  git status
+   55  git add backup.sql 
+   56  history
+   57  history > history.txt
+   58  cat history.txt 
+   59  git add history.txt 
+   60  git status
+   61  git commit -m "first commit, nothing important here"
+   62  git config --global user.email "kehoed@njit.edu"
+   63  git config --global user.name "DJ Kehoe"
+   64  git commit -m "first commit, nothing important here"
+   65  sudo apt-get install gitk
+   66  gitk
+   67  history
+   68  git log
+   69  git remote add origin https://github.com/engineerOfLies/IT635Spring17.git
+   70  git push -u origin master
+   71  history
+   72  history > history.txt
+   73  git status
+   74  git commit -m "update history"
+   75  git commit -am "update history"
+   76  gitk
+   77  git push
+   78  cd ..
+   79  mkdir git
+   80  cd git
+   81  git clone https://github.com/engineerOfLies/IT635Spring17.git
+   82  ls
+   83  cd IT635Spring17/
+   84  ls
+   85  gitk
+   86  history
+   87  ls
+   88  history > history.txt 
+   89  git commit -am "more history"
+   90  git push
+   91  cd ../
+   92  cd it635/
+   93  git pull
+   94  history 
+   95  cd git/IT635Spring17/
+   96  ls
+   97  ./testdb.php 
+   98  git status
+   99  git add testdb.php 
+  100  git commit -am "adding in php test mysql code"
+  101  git push
+  102  ./testdb.php 
+  103  history
+  104  D
+  105  ./testdb.php 
+  106  git status
+  107  git add studentDB.inc
+  108  git commit -am "organized db code into a library file"
+  109  git pushj
+  110  git push
+  111  git config --global push.default simple
+  112  ./testdb.php 
+  113  git status
+  114  git pull
+  115  ./testdb.php Ron "111-15" Teaneck 3
+  116  ./testdb.php Ron "');DROP TABLE class;--" Teaneck 3
+  117  ./testdb.php Ron " " " " "');DROP TABLE class;--"
+  118  ./testdb.php Ron " " " " "'');DROP TABLE class;--"
+  119  ./testdb.php Ron " " " " "5);DROP TABLE class;--"
+  120  ./testdb.php Ron "111-6" "hackensack" "5);DROP TABLE class;--"
+  121  ./testdb.php Ron "111-6" "hackensack" "5);DROP TABLE class;-- "
+  122  git commit -am "added in sanitization code to the db library"
+  123  git push
+  124  ./testdb.php Ron "111-6" "hackensack" "5);DROP TABLE class;-- "
+  125  mysql
+  126  mysql -u root -p
+  127  mysqldump -u root -p Classes > backup.sql
+  128  vim backup.sql 
+  129  mysql -u root -p
+  130  mysql -u root -p Classes < backup.sql
+  131  mysql -u root -p
+  132  s
+  133  ls
+  134  cd git/
+  135  ls
+  136  cd IT635Spring17/
+  137  ls
+  138  vim testdb.php
+  139  sudo apt-get install vim
+  140  vim testdb.php
+  141  chmod +x testdb.php 
+  142  ls -la
+  143  history
+  144  vim testdb.php
+  145  gedit testdb.php 
+  146  vim testdb.php
+  147  cd git/IT635Spring17/
+  148  ls
+  149  vim studentDB.inc 
+  150  vim testdb.php 
+  151  git status
+  152  git checkout -b 08022017
+  153  git add authentication.sql 
+  154  git commit -am "added basic user authentication logic"
+  155  git push -u origin 08022017 
+  156  git checkout 08022017 
+  157  ls
+  158  vim backup.sql 
+  159  cd ..
+  160  cd .
+  161  cd ..
+  162  git clone https://github.com/engineerOfLies/IT635Spring17.git
+  163  cd IT635Spring17/
+  164  git pull
+  165  ls
+  166  git branch
+  167  git checkout 08022017 
+  168  ls
+  169  cd ../git/IT635Spring17/
+  170  ls
+  171  mysql -u root -p
+  172  vim classes.sql
+  173  mysql -u root -p Classes < classes.sql 
+  174  mysql -u root -p
+  175  mysql -u root -p Classes < procedure.sql 
+  176  mysql -u root -p
+  177  mysql -u root -p Classes < procedure.sql 
+  178  mysql -u root -p
+  179  mysql -u root -p Classes < procedure.sql 
+  180  mysql -u root -p Classes
+  181  mysql -u root -p Classes < procedure.sql 
+  182  mysql -u root -p Classes
+  183  mysql -u root -p Classes < procedure.sql 
+  184  mysql -u root -p Classes
+  185  mysql -u root -p Classes < procedure.sql 
+  186* 
+  187  mysqldump -u root -p Classes > backup.sql 
+  188  less backup.sql 
+  189  mysql -u root -p 
+  190  mysql -u root -p sampleClass < backup.sql 
+  191  mysql -u root -p 
+  192  git status
+  193  git add *.sql
+  194  gti commit -am "today's class examples"
+  195  git commit -am "today's class examples"
+  196  git push -u origin 08022017 
+  197  gitk --all
+  198  git checkout select classes.prefix, classes.num, classes.title, schedule.dayOfWeek, schedule.StartTime, schedule.EndTime from classes,schedule where classes.id = schedule.classID and schedule.instructor = teacher;
+  199  gitk --all
+  200  git checkout 08022017 
+  201  history > history.txt 

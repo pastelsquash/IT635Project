@@ -1,0 +1,5 @@
+prefix, num, title, description, prerequisites, department
+IT, 202, Web Applications, Class on full stack web development, IT-201, Information Technology
+CS, 435, Data Structures & Algorithms, Class introduces algorithms and complexity, MATH-121, Computer Science
+CS, 288, Linux Programming, Class covers setup and programming in a linux environment, CS-114, Computer Science
+
