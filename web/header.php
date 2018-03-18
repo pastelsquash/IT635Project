@@ -19,7 +19,7 @@
                 <div class="nav-login">
                         <form action="./auth.php" method="POST">
                                 <input type="text" name="uid" placeholder="Username">
-                                <input type="text" name="pid" placeholder="Password">
+                                <input type="password" name="pid" placeholder="Password">
                                 <button type="login" name="login">Sign In</button>
 
                         </form>

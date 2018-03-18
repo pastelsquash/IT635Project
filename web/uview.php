@@ -1,7 +1,7 @@
 <?php
 
         include_once 'header.php';
-
+	include_once("../include/studentDB.inc");
 	
 	if (!$_SESSION['user_name']) {
 		header("Location: ./index.php?login=error");
@@ -14,8 +14,11 @@
 //Leave spot: delSpace($userid,$zoneid)
 
 
-?>
 
+
+?>
+<script type="text/javascript" src="jquery.min.js"></script>
+<script type="text/javascript" src="ajax.js"></script>
 <section class="main-container">
         <div class="main-wrapper">
                 <h2>Hello user!</h2>
@@ -24,11 +27,32 @@
 	<div>
 		<h2>REGISTER PARKING SPOT</h2>
 		<form class="forms" action="./uaction.php" method="POST">
-			<label for="place"> Where did you park?</label><input type"text" name="place">
-			<label for="placetype">Is that a venue or a lot?</label>
-				<label for="venue">Venue<input type="radio" name="placetype" value="venue"></label>
-				<label for="lot">Lot<input type="radio" name="placetype" value="lot"></label>
-			 <label for="zone"> If you parked in a multi-level lot, which floor/zone?</label><input type"text" name="zone">
+		<label>Select the venue you parked at:
+<?php
+			$studentDB = new StudentAccess("Parking");
+
+			$result = $studentDB->listVenues();
+
+    echo "<select name='place' id='place'>";
+
+    echo "<option value=''>Select Venue</option>";
+
+    while ($row = $result->fetch_assoc()) {
+
+                  unset($id, $name);
+                  $id = $row['venue_ID'];
+                  $name = $row['venue_name'];
+                  echo '<option value="'.$id.'">'.$name.'</option>';
+
+	}
+
+    echo "</select>";
+
+?>
+</label>
+			<label for="lot">Select the lot within that venue:
+			<select name="lot" id="lot"><option>Select Lot</option></select></label>
+
 			 <label for="notes">Type anything here that will help you remember your spot.</label>
 				<input type="text" name="notes" placeholder="By the elevator, etc...">
 			

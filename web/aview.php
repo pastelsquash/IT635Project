@@ -3,7 +3,7 @@
         include_once 'header.php';
 
 
-        if (!$_SESSION['user_role']) {
+        if (!$_SESSION['user_role'] AND $_SESSION['user_name']) {
                 header("Location: ./uview.php?login=nicetry");
                 exit();
         }
