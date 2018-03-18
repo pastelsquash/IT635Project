@@ -23,7 +23,25 @@ if(isset($_POST['v_id'])) {
 
 	}
 
-} else {
-  header('location: ./');
+} elseif (isset($_POST['l_id'])) {
+  
+   $studentDB = new StudentAccess("Parking");
+
+  $lid = $_POST['l_id'];
+
+
+
+  $result = $studentDB->listZones($lid);
+  echo "<option value=''>------- Zones --------</option>";
+  while($row = $result->fetch_assoc()) {
+          unset($id, $name);
+          $zid = $row['zone_ID'];
+          $zname = $row['zone_description'];
+          echo '<option value="'.$zid.'">'.$zname.'</option>';
+
+
+	}
+}
+  else { header('location: ./');
 }
 ?>

@@ -236,5 +236,39 @@ public function findZone($table,$lotid,$zone,$spacenum,$spacenotes)
 				
 }
 
+public function listVenues()
+{
+	$query = "Select venue_ID, venue_name from venues;";
+	$result = $this->db->query($query);
+
+	return $result;	
+
+}
+
+public function listLots($venueid)
+{
+	
+	$vid = $this->db->real_escape_string($venueid);
+	
+        $query = "Select lot_ID, lot_name from lots where venue_ID = $vid;";
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+
+public function listZones($lotid)
+{
+
+        $lid = $this->db->real_escape_string($lotid);
+
+        $query = "Select zone_ID, zone_description from zones where lot_ID = $lid;";
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+
+
 }
 ?>

@@ -11,8 +11,27 @@ $(document).ready(function() {
           $("#lot").html(resp);
         }
       });
-    } else {
+    }	
+    else {
       $("#lot").html("<option value=''>Select</option>");
     }
   });
+   $("#lot").change(function() {
+    var lot_id = $(this).val();
+    if(lot_id != "") {
+      $.ajax({
+        url:"get-lots.php",
+        data:{l_id:lot_id},
+        type:'POST',
+        success:function(response) {
+          var resp = $.trim(response);
+          $("#zone").html(resp);
+        }
+      });
+    }
+    else {
+      $("#zone").html("<option value=''>Select</option>");
+    }
+  });
+
 });

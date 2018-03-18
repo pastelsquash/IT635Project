@@ -51,7 +51,11 @@
 ?>
 </label>
 			<label for="lot">Select the lot within that venue:
-			<select name="lot" id="lot"><option>Select Lot</option></select></label>
+			<select name="lot" id="lot"><option>--------</option></select></label>
+
+			<label for="zone">Select the zone/floor within that lot (if any):
+                        <select name="zone" id="zone"><option>--------</option></select></label>
+
 
 			 <label for="notes">Type anything here that will help you remember your spot.</label>
 				<input type="text" name="notes" placeholder="By the elevator, etc...">
