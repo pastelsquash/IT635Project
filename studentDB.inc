@@ -128,6 +128,7 @@ public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lo
         {
                 echo "Failed to insert record for $lotname".PHP_EOL;
         }
+	return $query;
 }
 public function addLink($partnerid,$spotid,$islot) 
 {
