@@ -237,10 +237,10 @@ form button {
 }
 .forms button {
 	display: block;
-        width: 40%;
+        width: 80%;
         height: 40px;
         border: none;
-        background-color: #f11;
+        background-color: #bdd;
         font-family: arial;
         font-size: 16px;
         color: #111;

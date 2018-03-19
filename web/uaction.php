@@ -15,7 +15,7 @@ if (isset($_POST['addspace'])) {
 
 
 
-	$row = $studentDB->addSpace($_SESSION['user_ID'],$zone,$spacenum,$spacenotes);
+	$row = $studentDB->addSpace($_SESSION['user_ID'],$zone,$spacenum,$notes);
 	if (!$row) {
 		header("Location: ./uview.php?action=error");
                	exit();
@@ -28,9 +28,32 @@ if (isset($_POST['addspace'])) {
 		
 }
 
+else if(isset($_POST['delspace'])) {
+	
+	include_once("../include/studentDB.inc");
+
+        $studentDB = new StudentAccess("Parking");
+
+        $id = $_SESSION['user_ID'];
+	
+	$row = $studentDB->delSpace($_SESSION['user_ID']);
+
+	if ($row) {
+		 header("Location: ./uview.php?action=success");
+                 exit();
+	}
+	else {
+		header("Location: ./uview.php?action=error");
+                exit();
+	}
+
+
+}
 else {
+
 	header("Location: ./uview.php?action=error");
 	exit();
 }
+
 
 ?>

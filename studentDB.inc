@@ -22,21 +22,50 @@ public function __destruct()
         }
 }
 
-public function getParkingSpace($user,$zone)
+public function getParkingSpace($user)
 {
 		$id = $this->db->real_escape_string($user);
-		$zn = $this->db->real_escape_string($zone);
-        $query = "select * from spaces where user_ID = $id and zone_ID = $zn;";
+		//$zn = $this->db->real_escape_string($zone);
+        $query = "select * from spaces where user_ID = $id;";
 
         $queryResponse = $this->db->query($query);
-        $response = array();
-        while($row = $queryResponse->fetch_assoc())
-        {
-                $response[] = $row;
-        }
-	print_r($response);
-        return $response;
+	//print_r($response);
+        return $queryResponse;
 }
+public function getVenueLot($zone)
+{
+                $zid = $this->db->real_escape_string($zone);
+
+	$zquery = "select * from zones where zone_ID = $zid;";
+
+        $zResponse = $this->db->query($zquery);
+        //print_r($response);
+        $zrow = $zResponse->fetch_assoc();
+	$lid = $zrow['lot_ID'];
+
+
+        $query = "select * from lots where lot_ID = $lid;";
+
+        $queryResponse = $this->db->query($query);
+        //print_r($response);
+	$row = $queryResponse->fetch_assoc();
+	$vid = $row['venue_ID'];
+	
+	$vquery = "select * from venues where venue_ID = $vid;";
+	$vResponse = $this->db->query($vquery);
+	$vrow = $vResponse->fetch_assoc();
+	
+	
+	$parkedLot = $row['lot_name'];
+	$parkedVenue = $vrow['venue_name'];
+	$fullspot = array();
+	$fullspot['lot_name'] = $row['lot_name'];
+	$fullspot['venue_name'] = $vrow['venue_name'];
+	$fullspot['zone_description'] = $zrow['zone_description'];
+        return $fullspot;
+}
+
+
 public function getPartners($search)
 {
 		$sr = $this->db->real_escape_string($search);
@@ -266,6 +295,18 @@ public function listZones($lotid)
         $result = $this->db->query($query);
 
         return $result;
+
+}
+
+public function delSpace($userid)
+{
+
+	$uid = $this->db->real_escape_string($userid);
+	$query = "Delete from spaces where user_ID = $uid LIMIT 1;";
+
+	$result = $this->db->query($query);
+
+	return $result;
 
 }
 

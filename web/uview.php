@@ -60,10 +60,56 @@
 			 <label for="notes">Type anything here that will help you remember your spot.</label>
 				<input type="text" name="notes" placeholder="By the elevator, etc...">
 			
-			 <label for="spacenum">Number for space (can be blank):</label><input type="text" name="spacenum">
-			<button type="addspace" name="addspace">Register my spot!</button>
+			 <label for="spacenum">Number for space (can be blank):</label><input type="text" name="spacenum" id="spacenum">
+			<button type="addspace" name="addspace">Register Parking Spot</button>
 		</form>
 	</div>
+	<br>
+	<div>
+		<h2>PARKING SPOT LOOKUP</h2>
+	<br>
+	<form class="forms" action="./uaction.php" method="POST">
+	<?php
+		$studentDB = new StudentAccess("Parking");
+
+		$parked = $studentDB->getParkingSpace($_SESSION['user_ID']);
+
+		if ($parked->num_rows == 0) {
+			echo "<p>You haven't registered a parking spot yet.</p><br>";
+		}
+		else {
+			while ($parkingspot = $parked->fetch_assoc()) {
+				unset($pzone_id,$parkResp,$pvenue_name, $plot_name,$pzone_description,$notes,$number);
+				$pzone_id = $parkingspot['zone_ID'];
+                		$parkResp = $studentDB->getVenueLot($pzone_id);
+				$pvenue_name = $parkResp['venue_name'];
+				$plot_name = $parkResp['lot_name'];
+				$pzone_description = $parkResp['zone_description'];
+				$number = $parkingspot['space_number'];
+				$notes = $parkingspot['space_notes'];
+        	          	
+				if ($plot_name == $pzone_description) {
+                                echo '<p>You parked at the venue '.$pvenue_name.' in '.$plot_name;
+				} else {
+	                  	echo '<p>You parked at the venue '.$pvenue_name.' in '.$plot_name.', '.$pzone_description;
+				}
+				if ($number) {
+				echo ", space number ".$number;
+				}
+				if ($notes) {
+				echo ". You left yourself the following note: <b>".$notes.".</b></p><br>";
+				}
+				else { echo ".</p><br>"; }
+			}
+		}
+
+
+	?>
+		<button type="delspace" name="delspace">Unregister</button>
+
+	</form>
+	</div>
+
 </section>
 
 <?php
