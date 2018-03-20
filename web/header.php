@@ -14,7 +14,22 @@
         <nav>
         <div class="main-wrapper">
                 <ul>
-                        <li><a href="index.php">Home</a></li>
+<?php
+
+	if ($_SESSION['user_ID']) {
+		echo '<li><a href="signout.php">Sign Out</a></li>';
+	}
+
+	if ($_SESSION['user_role'] == "admin" ) {
+
+
+                echo '<li><a href="aparking.php">Parking Admin</a></li>';
+                echo '<li><a href="apartners.php">Partners Admin</a></li>';
+
+	}
+
+
+?>
                 </ul>
                 <div class="nav-login">
                         <form action="./auth.php" method="POST">
@@ -24,7 +39,8 @@
 
                         </form>
 
-                </div>
+		</div>
+
         </div>
         </nav>
 </header>

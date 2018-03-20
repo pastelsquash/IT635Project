@@ -53,7 +53,7 @@
 			<label for="lot">Select the lot within that venue:
 			<select name="lot" id="lot"><option>--------</option></select></label>
 
-			<label for="zone">Select the zone/floor within that lot (if any):
+			<label for="zone">Select the zone/floor within that lot:
                         <select name="zone" id="zone"><option>--------</option></select></label>
 
 

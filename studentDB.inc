@@ -200,6 +200,38 @@ public function addPartner($pname,$paddr,$pstate,$pzip,$pemail)
                 echo "Failed to insert record for $pname".PHP_EOL;
         }
 }
+
+public function addZone($lotid,$zonename)
+{
+        $lid = $this->db->real_escape_string($lotid);
+        $zn = $this->db->real_escape_string($zonename);
+        
+	if (!empty($zn)) {
+
+	$query = "insert into zones(lot_ID,zone_description)
+                VALUES ($lid,'$zn');";
+	}
+
+	else {
+	
+	$lquery = "select lot_name from lots where lot_ID = $lid;";
+
+	$lresult = $this-db-query($lquery);
+
+	$lotname = $lresult->fetch_object();
+
+	$query = "insert into zones(lot_ID,zone_description)
+                VALUES ($lid,'$lotname');";
+
+	}
+
+        //echo "executing SQL statement:\n".$query."\n";
+        $res = $this->db->query($query);
+	
+	return $res;
+}
+
+
 public function validateUser($username,$password)
 {
         $un = $this->db->real_escape_string($username);
@@ -310,6 +342,32 @@ public function delSpace($userid)
 	return $result;
 
 }
+public function delParking($lot,$zone,$type)
+{
+
+        $lid = $this->db->real_escape_string($lot);
+	$zid = $this->db->real_escape_string($zone);
+	
+	if ($type == "dlot") {
+		$zonecleanup = "delete from zones where lot_ID = $lid;";
+
+		$this->db->query($query);
+
+		$query = "Delete from lots where lot_ID = $lid;";
+	}
+	else if ($type == "dzone") {
+		$query = "Delete from zones where zone_ID = $zid;";
+	}
+	else {
+		return false;
+	}
+
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+
 
 
 }
