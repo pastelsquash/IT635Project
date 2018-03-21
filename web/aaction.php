@@ -99,4 +99,99 @@ else if (isset($_POST['delparking'])) {
                 }
 
 }
+else if (isset($_POST['addlink'])) {
+
+        if ($_SESSION['user_role'] == "admin" ) {
+
+                include_once("../include/studentDB.inc");
+
+                $studentDB = new StudentAccess("Parking");
+
+                $lot = $_POST['rlot'];
+                $deltype = $_POST['deltype'];
+                $zone = $_POST['rzone'];
+		$partner = $_POST['partner'];
+
+                $row = $studentDB->addLink($partner,$lot,$zone,$deltype);
+                if (!$row) {
+                        header("Location: ./apartners.php?action=error");
+                        exit();
+
+                        }
+                        else {
+                                header("Location: ./apartners.php?action=success");
+                                exit();
+                        }
+
+                }
+        else {
+                   header("Location: ./apartners.php?action=error");
+                   exit();
+
+                }
+
+}
+else if (isset($_POST['addpartner'])) {
+
+        if ($_SESSION['user_role'] == "admin" ) {
+
+                include_once("../include/studentDB.inc");
+
+                $studentDB = new StudentAccess("Parking");
+
+                $name = $_POST['name'];
+                $address = $_POST['address'];
+                $state = $_POST['state'];
+                $zip = $_POST['zip'];
+		$email = $_POST['email'];
+		$advert = $_POST['advert'];
+
+                $row = $studentDB->addPartner($name,$address,$state,$zip,$email,$advert);
+                if (!$row) {
+                        header("Location: ./apartners.php?action=error");
+                        exit();
+
+                        }
+                        else {
+                                header("Location: ./apartners.php?action=success");
+                                exit();
+                        }
+
+                }
+        else {
+                   header("Location: ./apartners.php?action=error");
+                   exit();
+
+                }
+
+}
+else if (isset($_POST['delpartner'])) {
+
+        if ($_SESSION['user_role'] == "admin" ) {
+
+                include_once("../include/studentDB.inc");
+
+                $studentDB = new StudentAccess("Parking");
+
+                $partner = $_POST['partner'];
+
+                $row = $studentDB->delPartner($partner);
+                if (!$row) {
+                        header("Location: ./apartners.php?action=error");
+                        exit();
+
+                        }
+                        else {
+                                header("Location: ./apartners.php?action=success");
+                                exit();
+                        }
+
+                }
+        else {
+                   header("Location: ./apartners.php?action=error");
+                   exit();
+
+                }
+
+}
 

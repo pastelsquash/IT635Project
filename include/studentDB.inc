@@ -130,21 +130,26 @@ public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lo
         }
 	return $query;
 }
-public function addLink($partnerid,$spotid,$islot) 
+public function addLink($partnerid,$lotid,$zoneid,$islot) 
 {
 	$pid = $this->db->real_escape_string($partnerid);
-	$sid = $this->db->real_escape_string($spotid);
+	$lid = $this->db->real_escape_string($lotid);
+	$zoid = $this->db->real_escape_string($zoneid);
 	$type = $this->db->real_escape_string($islot);
 	
-	if ($type == 0) {
+	if ($type == "rzone") {
 		$lotornot = 'zone';
 		$query = "insert into links(partner_id,zone_id)
-		VALUES ($pid,$sid);";
+		VALUES ($pid,$zoid);";
+
+		$return = $this->db->query($query);
+
+		return $return;
 	} 
 	else
 	{
 		$lotornot = 'lot';
-		$query = "Select zone_ID from zones where lot_ID = $sid;";
+		$query = "Select zone_ID from zones where lot_ID = $lid;";
 		
 		$queryResponse = $this->db->query($query);
 		while($row = $queryResponse->fetch_assoc())
@@ -156,10 +161,10 @@ public function addLink($partnerid,$spotid,$islot)
 			echo "executing SQL statement:\n".$zquery."\n";
 			if (!$this->db->query($zquery))
 			{
-				echo "Failed to establish partner link between partner $partnerid and $lotornot $zid".PHP_EOL;
+				return 0;
 			}
         }
-		return 0;
+		return 1;
 	}
 	echo "executing SQL statement:\n".$query."\n";
 	if (!$this->db->query($query))
@@ -184,21 +189,23 @@ public function addVenue($venuename,$venueaddr,$venuestate,$venuezip,$venuedesc)
         }
 }
 
-public function addPartner($pname,$paddr,$pstate,$pzip,$pemail)
+public function addPartner($pname,$paddr,$pstate,$pzip,$pemail,$padvert)
 {
         $pn = $this->db->real_escape_string($pname);
         $addr = $this->db->real_escape_string($paddr);
 		$state = $this->db->real_escape_string($pstate);
 		$zip = $this->db->real_escape_string($pzip);
 		$email = $this->db->real_escape_string($pemail);
-        $query = "insert into partners(partner_name,partner_address,partner_state,partner_zip,partner_email)
-		VALUES ('$pn','$addr','$state','$zip','$email');";
+	$adv =  $this->db->real_escape_string($padvert);
 
-        echo "executing SQL statement:\n".$query."\n";
-        if (!$this->db->query($query))
-        {
-                echo "Failed to insert record for $pname".PHP_EOL;
-        }
+        $query = "insert into partners(partner_name,partner_address,partner_state,partner_zip,partner_email,partner_advert)
+		VALUES ('$pn','$addr','$state','$zip','$email','$adv');";
+
+        //echo "executing SQL statement:\n".$query."\n";
+        $res = $this->db->query($query);
+
+        return $res;
+
 }
 
 public function addZone($lotid,$zonename)
@@ -330,6 +337,67 @@ public function listZones($lotid)
         return $result;
 
 }
+public function listPartners()
+{
+        $query = "Select * from partners;";
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+public function search($table,$searchterm)
+{
+
+	$tab = $this->db->real_escape_string($table);
+	$term = $this->db->real_escape_string($searchterm);
+
+	if ($tab == 'partners') {
+		$query = "select partners.*, links.zone_ID FROM partners LEFT JOIN links ON partners.partner_ID = links.partner_ID where partners.partner_name LIKE '%$term%';";
+
+
+	}
+	else if ($tab == 'lots') {
+
+                $query = "select lots.*, venues.venue_name FROM lots LEFT JOIN venues ON lots.venue_ID = venues.venue_ID where lots.lot_name LIKE '%$term%';";
+
+
+        }
+	else if ($tab == 'venues') {
+
+                $query = "select venues.*, lots.lot_name FROM venues LEFT JOIN lots ON venues.venue_ID = lots.venue_ID where venues.venue_name LIKE '%$term%';";
+
+        }
+	else if ($tab == 'zones') {
+
+                $query = "select lots.lot_name, zones.* FROM zones LEFT JOIN lots ON zones.lot_ID = lots.lot_ID where zones.zone_description LIKE '%$term%';";
+
+        }
+	else if ($tab == 'spaces') {
+
+                $query = "select users.user_name, spaces.* FROM spaces LEFT JOIN users ON users.user_ID = spaces.user_ID where users.user_name LIKE '%$term%';";
+
+        }
+	else if ($tab == 'users') {
+
+                $query = "select * from users where users.user_name LIKE '%$term%';";
+
+        }
+	else if ($tab == 'role') {
+
+                $query = "select * from users where users.user_role LIKE '%$term%';";
+
+        }
+	else {
+		$query = "select partners.*, links.zone_ID FROM partners LEFT JOIN links ON partners.partner_ID = links.partner_ID where partners.partner_name LIKE '%$term%';";
+
+	}
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+
+
 
 public function delSpace($userid)
 {
@@ -361,6 +429,22 @@ public function delParking($lot,$zone,$type)
 	else {
 		return false;
 	}
+
+        $result = $this->db->query($query);
+
+        return $result;
+
+}
+public function delPartner($partnerid)
+{
+
+        $pid = $this->db->real_escape_string($partnerid);
+
+        $zonecleanup = "delete from links where partner_ID = $pid;";
+
+        $this->db->query($zonecleanup);
+
+        $query = "Delete from partners where partner_ID = $pid;";
 
         $result = $this->db->query($query);
 

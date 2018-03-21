@@ -25,6 +25,8 @@
 
                 echo '<li><a href="aparking.php">Parking Admin</a></li>';
                 echo '<li><a href="apartners.php">Partners Admin</a></li>';
+		echo '<li><a href="asearch.php">Database Search</a></li>';
+
 
 	}
 
