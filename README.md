@@ -7,7 +7,7 @@ link to my website alongside my turn-in, but I must warn you: it's changed URLs 
 
 If it does work, here's what you can do:
 
-###1. Sign in as a user (individual deliverables)
+### 1. Sign in as a user (individual deliverables)
 
 I've provided a few user accounts you can use to sign in. They are:
 
@@ -22,7 +22,7 @@ I'm searching for a user's current parking spot automatically.
 
 When you're satisfied, you can sign out in the top left-hand corner's "Sign Out" button. If you don't see it, you're not signed in.
 
-###2. Sign in as an admin (individual deliverables + some common)
+### 2. Sign in as an admin (individual deliverables + some common)
 
 There's also two admin accounts. They are:
 
@@ -53,7 +53,7 @@ Database Search:
 
 The few common deliverables that are not covered (or partially covered) above will require that you look at my github.
 
-#GITHUB
+# GITHUB
 
 I have a github! Here's the link:
 
@@ -63,17 +63,17 @@ The branch to grade is the master branch - if I make a new branch, it'll be for 
 
 The github's structure is pretty straightforward. It has the following folders:
 
-###The main folder
+### The main folder
 
 The main folder contains my dump file (Parking.dmp) and... this README. And an old useless backup dump. I think you know how to use these.
 
-###The web folder (and web.old)
+### The web folder (and web.old)
 
 The web folder is everything that needs to go in /var/www/html in order to replicate my project. Other than installing the right packages (like apache, the php ones, php-mysqli, etc.), I really don't think you need to do anything else to get this working properly - I certainly don't remember modifying any config files.
 
 Web.old is old. Ignore it: it was a repository for bad, shameful ideas.
 
-###The include folder
+### The include folder
 
 The include folder has everything that needs to go in /var/www/include in order to replicate my project. It has two files:
 
@@ -87,7 +87,7 @@ The include folder has everything that needs to go in /var/www/include in order 
 	deliverables anymore - I made the website front-end more robust to make up for it. Between mysql itself and my website's content
 	(and the github's contents), you should have everything you need to judge me.
 
-#MYSQL DATABASE
+# MYSQL DATABASE
 
 Last thing to worry about is my database itself. If you're recreating my project, there's a couple rules to keep in mind:
 
@@ -100,7 +100,7 @@ Last thing to worry about is my database itself. If you're recreating my project
 
 If it works, yay! If not, see 1 and 2 above. Or... diagnose things, I guess.
 
-#IS IT WORKING?
+# IS IT WORKING?
 
 If you're recreating my project, follow these guidelines:
 
