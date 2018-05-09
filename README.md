@@ -115,3 +115,28 @@ If you're recreating my project, follow these guidelines:
 
 Not sure how much more in-depth this needs to be, quite frankly. I really did just copy your shit and build on it - moved it all straight into a barebones LAMP stack.
 Maybe I'm forgetting something, but if I did it's something you did too. Anything I forgot I learned from watching you.
+
+# LAZY FINAL PROJECT ADDENDUM
+
+I've provided some extra materials for the final project. They are:
+
+1. Three shell scripts - backup-mysql.sh, extract-mysql.sh, and prepare-mysql.sh. These were invovled in the tutorial provided by https://www.digitalocean.com/community/tutorials/how-to-configure-mysql-backups-with-percona-xtrabackup-on-ubuntu-16-04 to set up my incremental backups with rotation.
+2. Mysqld.cnf files for the master and slave. Again, I followed a guide, this time at https://www.digitalocean.com/community/tutorials/how-to-set-up-master-slave-replication-in-mysql . Following that guide obsoletes my provided config files, bug I figured I'd include them here anyways.
+3. A pretty picture - specifically, my UML Diagram. I made it in MSPaint. Enjoy!
+4. storedproc.sql, which includes my stored procedure for the Parking database. It's a procedure to replace my search functionality, which was originally done in PHP.
+5. A bunch of bullshit files Composer made while I desperately tried to get php-mongodb to detect its own goddamn classes. They're in the include and web directories. You're free to look at them, I don't even remember how I got it all working in the end.
+
+Speaking of mongodb, it's operating seamlessly out of my project, but probably won't if you try to replicate from my git. That is partially because I went through hell getting php-mongodb to work properly. I can remember a couple of the more important steps, but diagnosing how specifically to make it work is not something I can provide:
+
+- sudo add-apt-repository ppa:ondrej/php
+	Needed to get PHP7.1, which has dependencies for Composer which is a dependency for following the official PHP-MongoDB documentation guide.
+- sudo apt-get update
+	See above.
+- sudo apt-get install php7.1 php-mongodb php7.1-mbstring php7.1-xml
+	All Composer dependencies, plus the php-mongodb package's newest version.
+- sudo pecl [do stuff]
+	I'm getting more ambiguous here because I forgot what fixed shit.
+- sudo composer [more stuff]
+	I don't like Composer. I worry the feeling is mutual, as it took me a good chunk of time to make it work right.
+
+Note that it's fully possible those first few apt commands, plus a bit of config finagling, is all that's needed to get php-mongodb to work; I tried Composer FIRST and had no luck, but then tried those packages WITH Composer and got it working. I'm sure you appreciate brain-teasers, so enjoy this one - I know I did.
