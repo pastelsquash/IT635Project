@@ -129,14 +129,14 @@ I've provided some extra materials for the final project. They are:
 Speaking of mongodb, it's operating seamlessly out of my project, but probably won't if you try to replicate from my git. That is partially because I went through hell getting php-mongodb to work properly. I can remember a couple of the more important steps, but diagnosing how specifically to make it work is not something I can provide:
 
 - sudo add-apt-repository ppa:ondrej/php
-	Needed to get PHP7.1, which has dependencies for Composer which is a dependency for following the official PHP-MongoDB documentation guide.
+	|| Needed to get PHP7.1, which has dependencies for Composer which is a dependency for following the official PHP-MongoDB documentation guide.
 - sudo apt-get update
-	See above.
+	|| See above.
 - sudo apt-get install php7.1 php-mongodb php7.1-mbstring php7.1-xml
-	All Composer dependencies, plus the php-mongodb package's newest version.
+	|| All Composer dependencies, plus the php-mongodb package's newest version.
 - sudo pecl [do stuff]
-	I'm getting more ambiguous here because I forgot what fixed shit.
+	|| I'm getting more ambiguous here because I forgot what fixed shit.
 - sudo composer [more stuff]
-	I don't like Composer. I worry the feeling is mutual, as it took me a good chunk of time to make it work right.
+	|| I don't like Composer. I worry the feeling is mutual, as it took me a good chunk of time to make it work right.
 
 Note that it's fully possible those first few apt commands, plus a bit of config finagling, is all that's needed to get php-mongodb to work; I tried Composer FIRST and had no luck, but then tried those packages WITH Composer and got it working. I'm sure you appreciate brain-teasers, so enjoy this one - I know I did.
