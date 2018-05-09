@@ -60,11 +60,28 @@
        $studentDB = new StudentAccess("Parking");
 
        $result = $studentDB->search($table,$searchterm);
-
+	//echo "Result is ".$result.". Neat";
 
 	echo "<table style='border:1px solid black;'>
 	<tr style='border:1px solid black;'>";
 
+if ( $table == "spaces" ) {
+	
+        echo "<th>OID</th><th>user_id</th><th>zone_id</th><th>space_number</th><th>space_notes</th><th>car_make</th><th>car_model</th><th>car_year</th><th>car_color</th>";
+        echo "</tr>";
+
+echo "<tr>";
+
+foreach($result as $value) {
+echo "<td>" . $value . "</td>";
+
+}
+echo "</tr>";
+
+echo "</table>";
+}
+
+else {
 	$columns = array();
 
 	while ($row = $result->fetch_field()) 
@@ -91,7 +108,7 @@ echo "<td>" . $value . "</td>";
 echo "</tr>";
 }
 echo "</table>";
-
+}
 ?>
 
 

@@ -12,10 +12,16 @@ if (isset($_POST['addspace'])) {
 	$lot = $_POST['lot'];
 	$zone = $_POST['zone'];
 	$spacenum = $_POST['spacenum'];
+	
+	$carmake = $_POST['carmake'];
+	$carmodel = $_POST['carmodel'];
+	$caryear = $_POST['caryear'];
+	$carcolor = $_POST['carcolor'];
+	
 
 
 
-	$row = $studentDB->addSpace($_SESSION['user_ID'],$zone,$spacenum,$notes);
+	$row = $studentDB->addSpace($_SESSION['user_ID'],$zone,$spacenum,$notes,$carmake,$carmodel,$caryear,$carcolor);
 	if (!$row) {
 		header("Location: ./uview.php?action=error");
                	exit();

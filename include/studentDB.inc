@@ -22,7 +22,7 @@ public function __destruct()
         }
 }
 
-public function getParkingSpace($user)
+/*public function getParkingSpace($user)
 {
 		$id = $this->db->real_escape_string($user);
 		//$zn = $this->db->real_escape_string($zone);
@@ -31,7 +31,19 @@ public function getParkingSpace($user)
         $queryResponse = $this->db->query($query);
 	//print_r($response);
         return $queryResponse;
+}*/
+public function getParkingSpace($user)
+{
+        require_once '/var/www/include/vendor/autoload.php';
+        $coll = (new MongoDB\Client("mongodb://pastelsquash:pastelsquash@ds259109.mlab.com:59109/pastelsquash_it635"))->pastelsquash_it635->spaces;
+
+
+
+        $res = $coll->findOne(array("user_id" => $user));
+
+        return $res;
 }
+
 public function getVenueLot($zone)
 {
                 $zid = $this->db->real_escape_string($zone);
@@ -94,7 +106,7 @@ public function getPartners($search)
         return $response;
 }
 
-public function addSpace($userid,$zoneid,$spacenum,$spacenotes)
+/*public function addSpace($userid,$zoneid,$spacenum,$spacenotes)
 {
         $uid = $this->db->real_escape_string($userid);
 		$zid = $this->db->real_escape_string($zoneid);
@@ -110,6 +122,26 @@ public function addSpace($userid,$zoneid,$spacenum,$spacenotes)
 		return 0;
         }
 	else { return 1; }
+}
+*/
+public function addSpace($userid,$zoneid,$spacenum,$spacenotes,$carmake,$carmodel,$caryear,$carcolor) {
+	//$mconn = new MongoClient('mongodb://pastelsquash:pastelsquash@ds259109.mlab.com:59109/pastelsquash_it635');
+	//$db = $mconn->selectDB("it635");
+	//$coll = $db->spaces;
+	
+	require_once '/var/www/include/vendor/autoload.php';
+	$coll = (new MongoDB\Client("mongodb://pastelsquash:pastelsquash@ds259109.mlab.com:59109/pastelsquash_it635"))->pastelsquash_it635->spaces;
+	
+	if ($coll->findOne(array("user_id" => $userid))) {
+		return 0;
+	}
+	
+	$res = $coll->insertOne(array("user_id" => $userid, "zone_id" => $zoneid, "space_number" => "$spacenum", "space_notes" => "$spacenotes", "car_make" => "$carmake", "car_model" => "$carmodel", "car_year" => "$caryear", "car_color" => "$carcolor"));
+
+	return $res;
+	
+
+
 }
 public function addLot($venueid,$lotname,$lotsize,$lotaddr,$lotstate,$lotzip,$lotdescript)
 {
@@ -223,12 +255,13 @@ public function addZone($lotid,$zonename)
 	
 	$lquery = "select lot_name from lots where lot_ID = $lid;";
 
-	$lresult = $this-db-query($lquery);
+	$lresult = $this->db->query($lquery);
 
-	$lotname = $lresult->fetch_object();
+	$lotname = $lresult->fetch_row();
+	$lname = $lotname[0];
 
 	$query = "insert into zones(lot_ID,zone_description)
-                VALUES ($lid,'$lotname');";
+                VALUES ($lid,'$lname');";
 
 	}
 
@@ -345,7 +378,7 @@ public function listPartners()
         return $result;
 
 }
-public function search($table,$searchterm)
+/*public function search($table,$searchterm)
 {
 
 	$tab = $this->db->real_escape_string($table);
@@ -395,11 +428,30 @@ public function search($table,$searchterm)
 
         return $result;
 
+}*/
+
+public function search ($table,$searchterm) {
+	if ($table == "spaces") {
+		require_once '/var/www/include/vendor/autoload.php';
+        	$coll = (new MongoDB\Client("mongodb://pastelsquash:pastelsquash@ds259109.mlab.com:59109/pastelsquash_it635"))->pastelsquash_it635->spaces;
+	
+		$query = "SELECT user_ID FROM users WHERE user_name LIKE '%$searchterm%' LIMIT 1;";
+
+		$uid = $this->db->query($query);
+		$user = $uid->fetch_assoc();
+		$userid = $user["user_ID"];
+        	$res = $coll->findOne(array("user_id" => "$userid"));
+
+	}
+	else {
+		$query = "call searchParking('$table','$searchterm');";
+		$res = $this->db->query($query);
+	}
+
+	return $res;
 }
 
-
-
-public function delSpace($userid)
+/*public function delSpace($userid)
 {
 
 	$uid = $this->db->real_escape_string($userid);
@@ -409,7 +461,19 @@ public function delSpace($userid)
 
 	return $result;
 
+}*/
+public function delSpace($userid) {
+ require_once '/var/www/include/vendor/autoload.php';
+        $coll = (new MongoDB\Client("mongodb://pastelsquash:pastelsquash@ds259109.mlab.com:59109/pastelsquash_it635"))->pastelsquash_it635->spaces;
+
+
+
+        $res = $coll->deleteOne(array("user_id" => $userid));
+	return $res;
+
 }
+
+
 public function delParking($lot,$zone,$type)
 {
 

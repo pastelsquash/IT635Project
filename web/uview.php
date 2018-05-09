@@ -61,6 +61,15 @@
 				<input type="text" name="notes" placeholder="By the elevator, etc...">
 			
 			 <label for="spacenum">Number for space (can be blank):</label><input type="text" name="spacenum" id="spacenum">
+
+		<h3>Optional: Car Information</h3>
+		<p>Put in whatever information you'd like to help identify your car. You know, in case you forgot.</p>
+
+			 <label for="carmake">Manufacturer:</label><input type="text" name="carmake" id="carmake">
+			<label for="carmodel">Model:</label><input type="text" name="carmodel" id="carmodel">
+			<label for="caryear">Year:</label><input type="text" name="caryear" id="caryear">
+			<label for="carcolor">Color:</label><input type="text" name="carcolor" id="carcolor">
+
 			<button type="addspace" name="addspace">Register Parking Spot</button>
 		</form>
 	</div>
@@ -71,14 +80,17 @@
 	<form class="forms" action="./uaction.php" method="POST">
 	<?php
 		$studentDB = new StudentAccess("Parking");
-
+		require_once '/var/www/include/vendor/autoload.php';
+		
 		$parked = $studentDB->getParkingSpace($_SESSION['user_ID']);
 
-		if ($parked->num_rows == 0) {
+		if (!$parked["zone_id"]) {
 			echo "<p>You haven't registered a parking spot yet.</p><br>";
+			//echo "$parked".PHP_EOF;
+
 		}
 		else {
-			while ($parkingspot = $parked->fetch_assoc()) {
+			/*while ($parkingspot = $parked->fetch_assoc()) {
 				unset($pzone_id,$parkResp,$pvenue_name, $plot_name,$pzone_description,$notes,$number);
 				$pzone_id = $parkingspot['zone_ID'];
                 		$parkResp = $studentDB->getVenueLot($pzone_id);
@@ -100,7 +112,51 @@
 				echo ". You left yourself the following note: <b>".$notes.".</b></p><br>";
 				}
 				else { echo ".</p><br>"; }
-			}
+			}*/
+				unset($pzone_id,$parkResp,$pvenue_name, $plot_name,$pzone_description,$notes,$number);
+                                $pzone_id = $parked['zone_id'];
+                                $parkResp = $studentDB->getVenueLot($pzone_id);
+                                $pvenue_name = $parkResp['venue_name'];
+                                $plot_name = $parkResp['lot_name'];
+                                $pzone_description = $parkResp['zone_description'];
+                                $number = $parked['space_number'];
+                                $notes = $parked['space_notes'];
+
+				if ($parked['car_make'] || $parked['car_model'] || $parked['car_year'] || $parked['car_color'] ) {
+					$cartime = 1;
+					$carmake = $parked['car_make'];
+					$carmodel = $parked['car_model'];
+					$caryear = $parked['car_year'];
+					$carcolor = $parked['car_color'];
+				}
+
+                                if ($plot_name == $pzone_description) {
+					if ($cartime) {
+					echo '<p>Your vehicle, a <b>'.$carcolor.' '.$caryear.' '.$carmake.' '.$carmodel.'</b>, is parked at the venue '.$pvenue_name.' in '.$plot_name; 
+					}
+					else {
+                                	echo '<p>You parked at the venue '.$pvenue_name.' in '.$plot_name;
+                                	}
+				}
+				if ($plot_name != $pzone_description) {
+					if ($cartime) {
+					echo '<p>Your vehicle, a <b>'.$carcolor.' '.$caryear.' '.$carmake.' '.$carmodel.'</b>, is parked at the venue '.$pvenue_name.' in '.$plot_name.', '.$pzone_description;
+
+					}
+					else {
+                                	echo '<p>You parked at the venue '.$pvenue_name.' in '.$plot_name.', '.$pzone_description;
+                                	}	
+				}
+                                if ($number) {
+                                echo ", space number ".$number;
+                                }
+                                if ($notes) {
+                                echo ". You left yourself the following note: <b>".$notes.".</b></p><br>";
+                                }
+                                else { echo ".</p><br>"; }
+
+			
+			
 		}
 
 
